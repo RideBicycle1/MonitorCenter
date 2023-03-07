@@ -10,7 +10,7 @@
 <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        监控对象总表
+        监控对象配置
       </h1>
     </section>
 {% endblock %}
@@ -24,6 +24,10 @@
 
         <div class="box">
         <!-- /.box-header -->
+        <div class="box-body">
+            <button class="btn btn-primary">新建</button>
+            <button class="btn btn-default">批量操作</button>
+        </div>
         <div class="box-body">
 
             <table id="monitor_object_table" class="table table-bordered table-striped">
@@ -42,7 +46,11 @@
                 {% for mobject in MonitorObject %}
 
                     <tr>
-                        <td>{{ forloop.counter }}</td>
+                         <td>
+                             <div class="icheck-primary">
+                                 <input type="checkbox">{{ forloop.counter  }}
+                             </div>
+                         </td>
 
                         {% if mobject.object_type == 'hardware_device_layer' %}
                           <td class="text-green text-bold">{{ mobject.get_object_type_display }}</td>
@@ -99,10 +107,10 @@
 $(function () {
         $('#monitor_object_table').DataTable({
           "paging": true,       <!-- 允许分页 -->
-          "lengthChange": true, <!-- 允许改变每页显示的行数 -->
-          "searching": true,    <!-- 允许内容搜索 -->
+          "lengthChange": false, <!-- 允许改变每页显示的行数 -->
+          "searching": false,    <!-- 允许内容搜索 -->
           "ordering": true,     <!-- 允许排序 -->
-          "info": true,         <!-- 显示信息 -->
+          "info": false,         <!-- 显示信息 -->
           "autoWidth": false    <!-- 固定宽度 -->
         });
       });
