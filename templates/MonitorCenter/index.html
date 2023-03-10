@@ -11,7 +11,13 @@
     <section class="content-header">
       <h1>
         监控对象配置
+          <select style="color:black;font-size:16px;width: 120px;height:35px;">
+            <option value ="monitor" style="color:black;font-size:12px;">统一告警系统</option>
+            <option value ="log" style="color:black;font-size:12px;">日志分析平台</option>
+            <option value="test0309" style="color:black;font-size:12px;">测试项目0309</option>
+          </select>
       </h1>
+
     </section>
 {% endblock %}
 
@@ -39,6 +45,7 @@
                         <th>启用状态</th>
                         <th>创建时间</th>
                         <th>更新时间</th>
+                        <th>更多操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,6 +83,12 @@
 
 
                         <td>{{ mobject.update_time|date:"Y/m/d [H:m:s]" }}</td>
+                        <td>
+                            <select style="color:black;font-size:12px;width: 80px;height:25px;">
+                                <option value ="monitor" style="color:black;font-size:12px;">增删目标</option>
+                                <option value ="log" style="color:black;font-size:12px;">详细管理</option>
+                            </select>
+                        </td>
 
                     </tr>
 
