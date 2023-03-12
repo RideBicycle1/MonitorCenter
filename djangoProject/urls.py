@@ -19,6 +19,6 @@ from django.urls import path, include
 from MonitorCenter import views
 
 urlpatterns = [
-    path('MonitorCenter/', include('MonitorCenter.urls')),
+    path('MonitorCenter/v1/', include('MonitorCenter.urls')),
     path('control/', admin.site.urls),
 ]

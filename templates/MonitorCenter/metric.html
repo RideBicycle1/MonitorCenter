@@ -10,7 +10,7 @@
 <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        监控对象配置
+        监控指标配置
       </h1>
     </section>
 {% endblock %}
@@ -25,7 +25,7 @@
         <div class="box">
         <!-- /.box-header -->
         <div class="box-body">
-            <button class="btn btn-primary">新建</button>
+            <button class="btn btn-primary" onclick="">新建</button>
             <button class="btn btn-default">批量操作</button>
         </div>
         <div class="box-body">
@@ -34,15 +34,19 @@
                 <thead>
                     <tr>
                         <th>序号</th>
-                        <th>监控对象层级</th>
-                        <th>监控对象名称</th>
+                        <th>指标ID</th>
+                        <th>采集方式</th>
+                        <th>指标类型</th>
+                        <th>指标名称</th>
+                        <th>指标描述</th>
+                        <th>指标单位</th>
                         <th>创建时间</th>
                         <th>更新时间</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                {% for mobject in MonitorObject %}
+                {% for metric in Metrics %}
 
                     <tr>
                          <td>
@@ -50,24 +54,22 @@
                                  <input type="checkbox">{{ forloop.counter  }}
                              </div>
                          </td>
+                        <td>{{ metric.metric_ID }}</td>
 
-                        {% if mobject.object_type == 'hardware_device_layer' %}
-                          <td class="text-green text-bold">{{ mobject.get_object_type_display }}</td>
-                        {% elif mobject.object_type == "operating_system_layer" %}
-                          <td class="text-yellow text-bold">{{ mobject.get_object_type_display }}</td>
-                        {% elif mobject.object_type == "component_service_layer" %}
-                         <td class="text-blue text-bold">{{ mobject.get_object_type_display }}</td>
-                        {% elif mobject.object_type == "application_performance_layer" %}
-                          <td class="text-red text-bold">{{ mobject.get_object_type_display }}</td>
+                        {% if metric.collect_type == 0 %}
+                          <td class="text-green text-bold">{{ metric.get_collect_type_display }}</td>
+                        {% elif metric.collect_type == 1 %}
+                          <td class="text-yellow text-bold">{{ metric.get_collect_type_display }}</td>
+                        {% elif metric.collect_type == 2 %}
+                            <td class="text-yellow text-bold">{{ metric.get_collect_type_display }}</td>
                         {% endif %}
 
-
-                        <td>{{ mobject.object_name }}</td>
-
-                        <td>{{ mobject.create_time|date:"Y/m/d [H:m:s]" }}</td>
-
-
-                        <td>{{ mobject.update_time|date:"Y/m/d [H:m:s]" }}</td>
+                        <td>{{ metric.metric_type }}</td>
+                        <td>{{ metric.metric_name }}</td>
+                        <td>{{ metric.metric_desc }}</td>
+                        <td>{{ metric.metric_unit }}</td>
+                        <td>{{ metric.create_time|date:"Y/m/d [H:m:s]" }}</td>
+                        <td>{{ metric.update_time|date:"Y/m/d [H:m:s]" }}</td>
 
                     </tr>
 
@@ -75,10 +77,6 @@
                 <tr>没有数据</tr>
                 {% endfor %}
                 </tbody>
-            <tbody>
-            {% for metric in Metrics %}
-            {% endfor %}
-            </tbody>
             </table>
         </div>
         <!-- /.box-body -->
