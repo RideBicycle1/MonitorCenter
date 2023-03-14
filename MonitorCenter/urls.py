@@ -11,4 +11,5 @@ urlpatterns = [
     path('metrics/', views.metric, name='metric'),
     re_path(r'^metrics/$', views.metrics_list),
     re_path(r'^metrics/(?P<pk>[0-9]+)$', views.metrics_detail),
+    path('sys/', views.sysindex, name='sysindex'),
  ]
