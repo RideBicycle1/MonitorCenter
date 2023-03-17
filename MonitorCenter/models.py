@@ -48,7 +48,7 @@ class Metrics(models.Model):
     monitor_object_id = models.ForeignKey(MonitorObject, on_delete=models.CASCADE)
     # 监控指标名称
     metric_name = models.CharField(max_length=64, unique=True, verbose_name='指标名称')
-    # 监控指标类型?????为啥唯一
+    # 监控指标类型
     metric_type = models.CharField(max_length=64, verbose_name='指标类型')
     # 监控指标描述
     metric_desc = models.CharField(max_length=256, verbose_name='指标描述')
@@ -85,9 +85,7 @@ class SysInfoManage(models.Model):
     Sys_ops_pricipal = models.CharField(max_length=32, verbose_name='系统运维负责人')
     create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
     update_time = models.DateTimeField(auto_now=True, verbose_name='更新时间')
-    metrics_id = models.ManyToManyField(to=Metrics, through='SysinfoMetrics', through_fields=('sysinfo_id', 'metrics_id'))
-    mobject_id = models.ManyToManyField(to=MonitorObject)
-
+    metrics_sys = models.ManyToManyField("Metrics")
 
     def __str__(self):
         return '<%s>  %s' % (self.get_Sys_level_display(), self.Sys_level)
@@ -99,18 +97,15 @@ class SysInfoManage(models.Model):
         db_table = 'sysinfomanage'
 
 
-class SysinfoMetrics(models.Model):
-    metrics_status = (
-        (0, '停用'),
-        (1, '启用'),
-    )
-    sysinfo_id = models.ForeignKey(to='SysInfoManage', on_delete=models.CASCADE)
-    metrics_id = models.ForeignKey(to="Metrics", on_delete=models.CASCADE)
-    status = models.SmallIntegerField(choices=metrics_status, default=0, verbose_name='监控指标启停状态')
-
-    def __str__(self):
-        return '<%s>  %s' % (self.get_metrics_status_display(), self.status)
+class HostsInfo(models.Model):
+    ip_address = models.CharField(max_length=64, verbose_name='IP地址')
+    sys_id = models.ForeignKey(SysInfoManage, on_delete=models.CASCADE, verbose_name="系统ID")
+    obj_id = models.ForeignKey(MonitorObject, on_delete=models.CASCADE, verbose_name="对象模块ID")
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='更新时间')
 
     class Meta:
-        verbose_name = '系统与指标关联表'
-        db_table = 'sysinfometrics'
+        verbose_name = '系统信息管理'
+        verbose_name_plural = '系统信息管理'
+        ordering = ['-create_time']
+        db_table = 'hostinfo'

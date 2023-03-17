@@ -15,6 +15,7 @@ class MetricsSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ('id', 'create_time')
 
+
 class SysInfoManageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Metrics
