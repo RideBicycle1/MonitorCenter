@@ -2,14 +2,17 @@ from datetime import datetime
 
 from django.http import JsonResponse
 from django.shortcuts import render
+from rest_framework.utils import json
+
 # Create your views here.
 from MonitorCenter import models
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
+from django.http import HttpResponse
 from .models import MonitorObject, Metrics, SysInfoManage
 from .serializers import MonitorObjectSerializer, MetricsSerializer, SysInfoManageSerializer
+
 
 
 @api_view(['GET', 'POST'])
@@ -101,6 +104,21 @@ def monitor_object_detail(request, pk):
         monitor_object.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+@api_view(['POST'])
+def login(request):
+    # 先定义出返回数据的格式
+    res = {"code": 20000, "data": None, 'data': "success"}
+    # 添加返回的数据
+    # 返回
+    return HttpResponse(json.dumps(res))
+
+@api_view(['GET'])
+def info(request):
+    # 先定义出返回数据的格式
+    res = {"code": 20000, "data": 'admin'}
+    # 添加返回的数据
+    # 返回
+    return HttpResponse(json.dumps(res))
 
 @api_view(['GET', 'POST', 'DELETE'])
 def metrics_detail(request, pk):
