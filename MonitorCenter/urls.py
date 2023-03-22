@@ -6,7 +6,10 @@ app_name = 'MonitorCenter'
 urlpatterns = [
     path('user/login', views.login),
     path('user/info', views.info),
-    path('objects/', views.index, name='index'),
+    path('objects/list', views.monitor_object_list),
+
+
+
     re_path(r'^objects/api/$', views.monitor_object_list),
     re_path(r'^objects/api/(?P<pk>[0-9]+)$', views.monitor_object_detail),
     path('metrics/', views.metric, name='metric'),

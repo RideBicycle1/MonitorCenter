@@ -46,7 +46,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-   # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -73,6 +73,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'djangoProject.wsgi.application'
 
+# drf配置
+REST_FRAMEWORK = {
+    # 全局配置异常模块
+    'EXCEPTION_HANDLER': 'MonitorCenter.utils.exception.custom_exception_handler',
+    # 修改默认返回JSON的renderer的类
+    'DEFAULT_RENDERER_CLASSES': ('MonitorCenter.utils.rendererresponse.customrenderer',
+    ),
+}
+
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -81,8 +90,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'MonitorCenter',
         'USER': 'root',
-        'PASSWORD': '56ZS66xdQit_',
-        'HOST': '192.168.50.30',
+        'PASSWORD': '1qaz!QAZ2wsx@WSX',
+        'HOST': '144.34.162.239',
         'PORT': '3306',
     }
 }
@@ -134,3 +143,4 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
+

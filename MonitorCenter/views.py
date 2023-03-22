@@ -14,7 +14,6 @@ from .models import MonitorObject, Metrics, SysInfoManage
 from .serializers import MonitorObjectSerializer, MetricsSerializer, SysInfoManageSerializer
 
 
-
 @api_view(['GET', 'POST'])
 def monitor_object_list(request):
     """
@@ -25,7 +24,11 @@ def monitor_object_list(request):
     if request.method == 'GET':
         monitor_objects = MonitorObject.objects.all()
         serializer = MonitorObjectSerializer(monitor_objects, many=True)
-        return Response(serializer.data)
+
+        res = {"code": 20000, "data": serializer.data, 'msg': "success"}
+        # 添加返回的数据
+        # 返回
+        return HttpResponse(json.dumps(res))
 
     elif request.method == 'POST':
         serializer = MonitorObjectSerializer(data=request.data)
@@ -104,6 +107,7 @@ def monitor_object_detail(request, pk):
         monitor_object.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 @api_view(['POST'])
 def login(request):
     # 先定义出返回数据的格式
@@ -112,13 +116,17 @@ def login(request):
     # 返回
     return HttpResponse(json.dumps(res))
 
+
 @api_view(['GET'])
 def info(request):
     # 先定义出返回数据的格式
-    res = {"code": 20000, "data": 'admin'}
+    res = {"code": 20000, "data": {"roles": ["admin"], "introduction": "I am a super administrator",
+                                   "avatar": "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
+                                   "name": "Super Admin"}}
     # 添加返回的数据
     # 返回
     return HttpResponse(json.dumps(res))
+
 
 @api_view(['GET', 'POST', 'DELETE'])
 def metrics_detail(request, pk):
