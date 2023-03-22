@@ -44,7 +44,8 @@
                         <th>指标类型</th>
                         <th>指标名称</th>
                         <th>指标描述</th>
-                        <th>指标单位</th>
+                        <th>触发规则</th>
+                        <th>指标阈值</th>
                         <th>创建时间</th>
                         <th>更新时间</th>
                         <th>更多操作</th>
@@ -73,7 +74,20 @@
                         <td>{{ metric.metric_type }}</td>
                         <td>{{ metric.metric_name }}</td>
                         <td>{{ metric.metric_desc }}</td>
-                        <td>{{ metric.metric_unit }}</td>
+                        {% if metric.trigger_rule == 'greater' %}
+                          <td class="text-green text-bold">{{ metric.get_trigger_rule_display }}</td>
+                        {% elif metric.trigger_rule == 'less' %}
+                          <td class="text-yellow text-bold">{{ metric.get_trigger_rule_display }}</td>
+                        {% elif metric.trigger_rule == 'equal' %}
+                            <td class="text-yellow text-bold">{{ metric.get_trigger_rule_display }}</td>
+                        {% elif metric.trigger_rule == 'unequal' %}
+                            <td class="text-yellow text-bold">{{ metric.get_trigger_rule_display }}</td>
+                        {% elif metric.trigger_rule == 'less_equal' %}
+                            <td class="text-yellow text-bold">{{ metric.get_trigger_rule_display }}</td>
+                        {% elif metric.trigger_rule == 'greater_equal' %}
+                            <td class="text-yellow text-bold">{{ metric.get_trigger_rule_display }}</td>
+                        {% endif %}
+                        <td>{{ metric.Threshold }}{{ metric.metric_unit }}</td>
                         <td>{{ metric.create_time|date:"Y/m/d [H:m:s]" }}</td>
                         <td>{{ metric.update_time|date:"Y/m/d [H:m:s]" }}</td>
                         <td>

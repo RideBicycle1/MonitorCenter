@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import MonitorObject, Metrics, SysInfoManage
+from MonitorCenter.models import MonitorObject, Metrics, SysInfoManage, HostsInfo
 
 
 class MonitorObjectSerializer(serializers.ModelSerializer):
@@ -18,6 +18,13 @@ class MetricsSerializer(serializers.ModelSerializer):
 
 class SysInfoManageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Metrics
+        model = SysInfoManage
+        fields = '__all__'
+        read_only_fields = ('id', 'create_time')
+
+
+class HostsInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HostsInfo
         fields = '__all__'
         read_only_fields = ('id', 'create_time')
