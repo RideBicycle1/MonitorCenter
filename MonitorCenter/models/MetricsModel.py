@@ -4,10 +4,15 @@ from .MonitorObjectModel import *
 
 
 class Metrics(models.Model):
-    type = (
+    collect_type = (
         (0, 'Agent'),
         (1, '插件'),
         (2, '协议')
+    )
+    metrics_type = (
+        (0, '系统层级'),
+        (1, '自定义'),
+        (2, '模块层级')
     )
     trigger_rule_type = (
         ('greater', '>'),
@@ -24,7 +29,7 @@ class Metrics(models.Model):
     # 监控指标名称
     metric_name = models.CharField(max_length=64, unique=True, verbose_name='指标名称')
     # 监控指标类型
-    metric_type = models.CharField(max_length=64, verbose_name='指标类型')
+    metric_type = models.SmallIntegerField(choices=metrics_type, default=0, verbose_name='指标类型')
     # 监控指标描述
     metric_desc = models.CharField(max_length=256, verbose_name='指标描述')
     # 阈值
@@ -32,7 +37,7 @@ class Metrics(models.Model):
     # 监控指标单位
     metric_unit = models.CharField(max_length=256, verbose_name='指标单位')
     # 监控指标采集类型
-    collect_type = models.SmallIntegerField(choices=type, default=0, verbose_name='指标采集类型')
+    collect_type = models.SmallIntegerField(choices=collect_type, default=0, verbose_name='指标采集类型')
     # 触发规则
     trigger_rule = models.CharField(max_length=256, choices=trigger_rule_type, default='less', verbose_name='触发规则')
     # 指标创建时间

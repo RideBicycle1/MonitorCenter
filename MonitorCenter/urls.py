@@ -5,8 +5,14 @@ from MonitorCenter import views
 app_name = 'MonitorCenter'
 
 urlpatterns = [
+    path('user/login', views.otherview.login),
+    path('user/info', views.otherview.info),
     # 对象接口路径
     path('objects/', views.MonitorObjectview.index, name='index'),
+    path('monitor_objects/system/<int:system_id>/', views.get_monitor_objects_by_system, name='get_monitor_objects_by_system'),
+    path('monitor_objects/update/<int:monitor_object_id>/', views.update_monitor_object, name='update_monitor_object'),
+    path('monitor_objects/delete/<int:monitor_object_id>/', views.delete_monitor_object, name='delete_monitor_object'),
+    path('create_monitor_object/', views.create_monitor_object, name='create_monitor_object'),
     re_path(r'^objects/api/$', views.MonitorObjectview.monitor_object_list),
     re_path(r'^objects/api/(?P<pk>[0-9]+)$', views.MonitorObjectview.monitor_object_detail),
     # 指标接口路径
