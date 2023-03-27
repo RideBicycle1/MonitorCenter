@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from .MonitorObjectModel import *
+from MonitorCenter.models import *
 
 
 class Metrics(models.Model):
@@ -24,8 +24,6 @@ class Metrics(models.Model):
     )
     # 指标ID，例如：BCLinux-001
     metric_ID = models.CharField(max_length=256, unique=True, verbose_name="监控指标ID")
-    # 指标-监控对象
-    monitor_object_id = models.ForeignKey(MonitorObject, on_delete=models.CASCADE)
     # 监控指标名称
     metric_name = models.CharField(max_length=64, unique=True, verbose_name='指标名称')
     # 监控指标类型
@@ -44,8 +42,14 @@ class Metrics(models.Model):
     create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
     # 指标更新时间
     update_time = models.DateTimeField(auto_now=True, verbose_name='更新日期')
-    # 指标与系统之间的多对多
-    metrics_sys = models.ManyToManyField("SysInfoManage", related_name='metrics_sys')
+    # 逻辑删除
+    is_deleted = models.BooleanField(default=False, verbose_name='已删除')
+    # 通过中间表关联对象模块
+    monitor_objects = models.ManyToManyField('MonitorObject', through='MetricsMonitorObject')
+    # 通过中间表关联主机信息
+    hosts_info = models.ManyToManyField('HostsInfo', through='MetricsHostsInfo')
+    # 通过中间表关联系统信息
+    sys_info_manages = models.ManyToManyField('SysInfoManage', through='MetricsSysInfoManage')
 
     def __str__(self):
         return '<%s>  %s' % (self.get_collect_type_display(), self.collect_type)
@@ -60,3 +64,17 @@ class Metrics(models.Model):
         db_table = 'metrics'
         app_label = 'MonitorCenter'
 
+
+class MetricsMonitorObject(models.Model):
+    metric = models.ForeignKey(Metrics, on_delete=models.CASCADE)
+    monitor_object = models.ForeignKey('MonitorObject', on_delete=models.CASCADE)
+
+
+class MetricsHostsInfo(models.Model):
+    metric = models.ForeignKey(Metrics, on_delete=models.CASCADE)
+    hosts_info = models.ForeignKey('HostsInfo', on_delete=models.CASCADE)
+
+
+class MetricsSysInfoManage(models.Model):
+    metric = models.ForeignKey(Metrics, on_delete=models.CASCADE)
+    sys_info = models.ForeignKey('SysInfoManage', on_delete=models.CASCADE)

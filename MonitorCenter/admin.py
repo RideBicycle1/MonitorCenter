@@ -15,7 +15,7 @@ class MonitorObjectAdmin(admin.ModelAdmin):
 
 
 class MetricsAdmin(admin.ModelAdmin):
-    list_display = ('metric_ID', 'monitor_object_id', 'metric_name', 'metric_type', 'metric_desc'
+    list_display = ('metric_ID', 'metric_name', 'metric_type', 'metric_desc'
                     , 'metric_unit', 'collect_type', 'create_time', 'update_time')
 
     '''过滤字段'''
@@ -37,7 +37,7 @@ class SysInfoManageAdmin(admin.ModelAdmin):
 
 
 class HostinfoAdmin(admin.ModelAdmin):
-    list_display = ('ip_address', 'sys_id', 'obj_id', 'create_time', 'update_time')
+    list_display = ('ip_address', 'sysinfo_object_id', 'obj_id', 'create_time', 'update_time')
 
     '''过滤字段'''
     list_filter = ('create_time',)
